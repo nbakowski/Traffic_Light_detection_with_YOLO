@@ -6,6 +6,7 @@ import cv2 as cv
 import file_operations as files
 import renderer
 import settings
+import click
 
 # Configuration
 os.environ["USE_NNPACK"] = "0"
@@ -16,10 +17,10 @@ logging.basicConfig(
 
 
 def exit_program() -> bool:
-    os.system("clear")
+    click.clear()
     print("See you next time!")
     input("Press the Enter key to continue...")
-    os.system("clear")
+    click.clear()
     return True
 
 
@@ -43,7 +44,7 @@ def get_value(possible_inputs: list[int]) -> int:
 
 def main():
     while True:
-        os.system("clear")
+        click.clear()
         print("--- YOLO Traffic Light System ---")
         print("1 - Webcam.")
         print("2 - Files.")
@@ -57,7 +58,7 @@ def main():
         elif instruction == 2:
             files.manage_directories()
             while True:
-                os.system("clear")
+                click.clear()
                 print("1 - Scan only new files.")
                 print("2 - Scan all files.")
                 print("3 - Show video folder.")

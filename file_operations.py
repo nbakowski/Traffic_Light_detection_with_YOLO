@@ -54,7 +54,7 @@ def prep_files(scan_all: bool) -> None:
                 logging.error(f"Could not remove existing output {out_path}: {e}")
                 continue
 
-        fourcc = cv.VideoWriter.fourcc(*"avc1")
+        fourcc = cv.VideoWriter.fourcc(*"mp4v")
         out = cv.VideoWriter(
             out_path,
             fourcc,
