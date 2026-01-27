@@ -1,0 +1,4 @@
+from ultralytics import YOLO
+
+MODEL = YOLO("yolo26m.pt")
+SCALED_IMAGE_WIDTH, SCALED_IMAGE_HEIGHT = 1270, 720
