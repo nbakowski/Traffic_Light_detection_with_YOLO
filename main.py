@@ -1,13 +1,16 @@
-import os
-import cv2 as cv
 import logging
+import os
+
+import cv2 as cv
 from rich.progress import Progress
 from ultralytics import YOLO
+
 import hsv_detector
 
 # Configuration
-MODEL = YOLO("yolo26s.pt")
+MODEL = YOLO("yolo26m.pt")
 SCALED_IMAGE_WIDTH, SCALED_IMAGE_HEIGHT = 1270, 720
+os.environ["USE_NNPACK"] = "0"
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -58,20 +61,17 @@ def prep_files(scan_all: bool) -> None:
         if not capture.isOpened():
             raise Exception
 
-        # build output path once
         out_path = f"output/{name.name}_processed.mp4"
 
-        # If file exists and we intend to (re)create it, remove it first so AVFoundation/OpenCV can write.
         if os.path.exists(out_path):
             try:
                 os.remove(out_path)
                 logging.info(f"Removed existing output: {out_path}")
             except Exception as e:
                 logging.error(f"Could not remove existing output {out_path}: {e}")
-                # if the file couldn't be removed, skip this file to avoid AVAssetWriter errors
                 continue
 
-        fourcc = cv.VideoWriter.fourcc(*"avc1")
+        fourcc = cv.VideoWriter.fourcc(*"mp4v")
         out = cv.VideoWriter(
             out_path,
             fourcc,
@@ -103,11 +103,10 @@ def get_value(possible_inputs: list[int]) -> int:
         except ValueError:
             print("Invalid input! Please choose from", possible_inputs)
 
-
 def render_start(
         capture: cv.VideoCapture,
         total_frame_count: int,
-        out: cv.VideoWriter,
+        out: cv.VideoWriter | None,
         uses_webcam: bool,
         name: str,
 ) -> None:
@@ -125,7 +124,7 @@ def render_start(
         resized_image = cv.resize(frame, (SCALED_IMAGE_WIDTH, SCALED_IMAGE_HEIGHT))
 
         # YOLO Detection
-        results = MODEL.predict(source=resized_image, verbose=False, device="cpu", classes=[9])
+        results = MODEL.predict(source=resized_image, verbose=False, classes=[9])
 
         for result in results:
             for box in result.boxes:
