@@ -1,15 +1,11 @@
 import logging
 import os
-
 import cv2 as cv
-
 import file_operations as files
 import renderer
 import settings
 import click
 
-# Configuration
-os.environ["USE_NNPACK"] = "0"
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -44,8 +40,8 @@ def get_value(possible_inputs: list[int]) -> int:
 
 def main():
     while True:
-        # click.clear()
-        print("--- YOLO Traffic Light System ---")
+        click.clear()
+        print("--- YOLO Traffic Light Detection System ---")
         print("1 - Webcam.")
         print("2 - Files.")
         print("3 - Exit.")

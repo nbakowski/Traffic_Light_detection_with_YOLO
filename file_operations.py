@@ -1,11 +1,8 @@
 import logging
 import os
 import cv2 as cv
-
 import settings
 from renderer import render_start
-
-SCALED_IMAGE_WIDTH, SCALED_IMAGE_HEIGHT = 1270, 720
 
 
 def scan_for_existing_files() -> list[str]:
@@ -58,7 +55,7 @@ def prep_files(scan_all: bool) -> None:
             out_path,
             settings.CODEC,
             30,
-            (SCALED_IMAGE_WIDTH, SCALED_IMAGE_HEIGHT),
+            (settings.SCALED_IMAGE_WIDTH, settings.SCALED_IMAGE_HEIGHT),
         )
 
         if not out.isOpened():

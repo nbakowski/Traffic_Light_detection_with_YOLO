@@ -3,11 +3,13 @@ import cv2
 from ultralytics import YOLO
 from enum import Enum
 
+
 class RenderMode(Enum):
     WITH_HSV = "with_hsv",
     WITHOUT_HSV = "without_hsv",
 
-MODEL = YOLO("COCO_BEST.pt")
+
+MODEL = YOLO("COCO128_YOLO26_COLLAB.pt")
 RENDERMODE = RenderMode.WITH_HSV
 SCALED_IMAGE_WIDTH, SCALED_IMAGE_HEIGHT = 1270, 720
 if os.name == "nt":

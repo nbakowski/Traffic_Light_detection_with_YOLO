@@ -1,6 +1,5 @@
 import cv2 as cv
-
-import hsv_detector
+import hsv_detector as hsv
 
 
 def render_without_hsv(resized_image, results):
@@ -30,13 +29,13 @@ def render_with_hsv(resized_image, results):
             x1, y1, x2, y2 = map(int, box.xyxy[0])
 
             # Crop for HSV classification
-            light_roi = resized_image[y1:y2, x1:x2]
+            roi = resized_image[y1:y2, x1:x2]
 
             # Check if ROI is valid (not empty)
-            if light_roi.size == 0:
+            if roi.size == 0:
                 continue
 
-            light_class, pixel_count = hsv_detector.classify_traffic_light(light_roi)
+            light_class, pixel_count = hsv.classify_traffic_light(roi)
 
             if light_class == "none":
                 continue
