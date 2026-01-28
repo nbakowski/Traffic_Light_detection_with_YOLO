@@ -1,8 +1,12 @@
 import cv2 as cv
+
 import hsv_detector as hsv
 
 
 def render_without_hsv(resized_image, results):
+    """
+    Renders the results without HSV classification.
+    """
     for result in results:
         for box in result.boxes:
             # Get coordinates
@@ -20,9 +24,22 @@ def render_without_hsv(resized_image, results):
             # Draw Bounding Box and Label
             cv.rectangle(resized_image, (x1, y1), (x2, y2), color_bgr, 3)
             label = f"{color_name} ({confidence:.2f})"
-            cv.putText(resized_image, label, (x1, y1 - 10), cv.FONT_HERSHEY_SIMPLEX, 0.6, color_bgr, 2)
+            cv.putText(
+                resized_image,
+                label,
+                (x1, y1 - 10),
+                cv.FONT_HERSHEY_SIMPLEX,
+                0.6,
+                color_bgr,
+                2,
+            )
+
 
 def render_with_hsv(resized_image, results):
+    """
+    Renders the results with HSV classification.
+    """
+
     for result in results:
         for box in result.boxes:
             # Get coordinates
@@ -47,4 +64,12 @@ def render_with_hsv(resized_image, results):
             # Draw Bounding Box and Label
             cv.rectangle(resized_image, (x1, y1), (x2, y2), color, 3)
             label = f"{light_class} ({box.conf[0]:.2f})"
-            cv.putText(resized_image, label, (x1, y1 - 10), cv.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
+            cv.putText(
+                resized_image,
+                label,
+                (x1, y1 - 10),
+                cv.FONT_HERSHEY_SIMPLEX,
+                0.6,
+                color,
+                2,
+            )

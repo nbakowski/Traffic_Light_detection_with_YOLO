@@ -1,11 +1,12 @@
 import logging
 import os
+
+import click
 import cv2 as cv
+
 import file_operations as files
 import renderer
 import settings
-import click
-
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
@@ -13,6 +14,10 @@ logging.basicConfig(
 
 
 def exit_program() -> bool:
+    """
+    Exits the program.
+    Clears the screen and prints a farewell message.
+    """
     click.clear()
     print("See you next time!")
     input("Press the Enter key to continue...")
@@ -21,6 +26,9 @@ def exit_program() -> bool:
 
 
 def show_files(directory_path: str, folder_name: str) -> None:
+    """
+    Displays the files in the specified directory.
+    """
     print(f"{folder_name} folder:")
     for name in os.listdir(directory_path):
         print(name)
@@ -28,6 +36,9 @@ def show_files(directory_path: str, folder_name: str) -> None:
 
 
 def get_value(possible_inputs: list[int]) -> int:
+    """
+    Gets a valid integer input from the user.
+    """
     while True:
         try:
             value = int(input("Choice: "))
@@ -39,6 +50,9 @@ def get_value(possible_inputs: list[int]) -> int:
 
 
 def main():
+    """
+    Main function of the program.
+    """
     while True:
         click.clear()
         print("--- YOLO Traffic Light Detection System ---")
@@ -74,9 +88,11 @@ def main():
                 elif choice == 5:
                     break
                 else:
-                    if exit_program(): return
+                    if exit_program():
+                        return
         else:
-            if exit_program(): return
+            if exit_program():
+                return
 
 
 if __name__ == "__main__":

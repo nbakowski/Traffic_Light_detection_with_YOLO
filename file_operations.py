@@ -1,11 +1,16 @@
 import logging
 import os
+
 import cv2 as cv
+
 import settings
 from renderer import render_start
 
 
 def scan_for_existing_files() -> list[str]:
+    """
+    Scans for existing files in the output directory.
+    """
     new_files = []
     for name in os.scandir("video"):
         if os.path.exists(f"output/{name.name}_processed.mp4"):
@@ -18,6 +23,10 @@ def scan_for_existing_files() -> list[str]:
 
 
 def manage_directories() -> None:
+    """
+    Manages the directories for the application.
+    If the directories do not exist, they are created.
+    """
     directories_list = ["video/", "output/"]
     for directory in directories_list:
         if not os.path.isdir(directory):
@@ -27,11 +36,14 @@ def manage_directories() -> None:
 
 
 def prep_files(scan_all: bool) -> None:
-    if not scan_all:
-        files_to_scan = scan_for_existing_files()
-
+    """
+    Prepares the files for processing.
+    If scan_all is True, all files are processed.
+    If scan_all is False, only new files are processed.
+    """
     for name in os.scandir("video"):
         if not scan_all:
+            files_to_scan = scan_for_existing_files()
             if name.name not in files_to_scan:
                 continue
 
