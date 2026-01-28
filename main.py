@@ -44,7 +44,7 @@ def get_value(possible_inputs: list[int]) -> int:
 
 def main():
     while True:
-        click.clear()
+        # click.clear()
         print("--- YOLO Traffic Light System ---")
         print("1 - Webcam.")
         print("2 - Files.")

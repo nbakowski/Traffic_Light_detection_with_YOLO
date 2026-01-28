@@ -1,9 +1,9 @@
 from rich.progress import Progress
 import cv2 as cv
 from ultralytics.engine.model import Model
-
-import hsv_detector
+import renderers as r
 import settings
+from settings import RENDERMODE
 
 
 def render_start(
@@ -28,33 +28,14 @@ def render_start(
         resized_image = cv.resize(frame, (settings.SCALED_IMAGE_WIDTH, settings.SCALED_IMAGE_HEIGHT))
 
         # YOLO Detection
-        results = model.predict(source=resized_image,verbose=False)
+        if settings.RenderMode is RENDERMODE.WITHOUT_HSV:
+            results = model.predict(source=resized_image, verbose=False)
+            r.render_without_hsv(resized_image, results)
+        else:
+            results = model.predict(source=resized_image, verbose=False, classes=[9])
+            r.render_with_hsv(resized_image, results)
 
-        for result in results:
-            for box in result.boxes:
-                # Get coordinates
-                x1, y1, x2, y2 = map(int, box.xyxy[0])
 
-                # Crop for HSV classification
-                light_roi = resized_image[y1:y2, x1:x2]
-
-                # Check if ROI is valid (not empty)
-                if light_roi.size == 0:
-                    continue
-
-                light_class, pixel_count = hsv_detector.classify_traffic_light(light_roi)
-
-                if light_class == "none":
-                    continue
-
-                # UI Color logic
-                colors = {"red": (0, 0, 255), "green": (0, 255, 0), "yellow": (0, 255, 255)}
-                color = colors.get(light_class, (255, 255, 255))
-
-                # Draw Bounding Box and Label
-                cv.rectangle(resized_image, (x1, y1), (x2, y2), color, 3)
-                label = f"{light_class} ({box.conf[0]:.2f})"
-                cv.putText(resized_image, label, (x1, y1 - 10), cv.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
 
         if progress and task is not None:
             progress.update(task, advance=1)
