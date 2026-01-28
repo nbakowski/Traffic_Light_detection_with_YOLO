@@ -16,7 +16,7 @@ The COCO dataset: https://cocodataset.org/#home \
 Pretrained models: https://docs.ultralytics.com/models/
 
 ## License
-MIT License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 - COCO dataset creators and maintainers
