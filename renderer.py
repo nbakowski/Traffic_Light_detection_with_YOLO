@@ -28,7 +28,7 @@ def render_start(
         resized_image = cv.resize(frame, (settings.SCALED_IMAGE_WIDTH, settings.SCALED_IMAGE_HEIGHT))
 
         # YOLO Detection
-        results = model.predict(source=resized_image, verbose=False, classes=[9])
+        results = model.predict(source=resized_image,verbose=False)
 
         for result in results:
             for box in result.boxes:
