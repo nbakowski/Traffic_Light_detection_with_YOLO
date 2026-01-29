@@ -55,8 +55,9 @@ def prep_files(scan_all: bool) -> None:
         files_to_scan = scan_for_existing_files()
 
     for name in os.scandir("video"):
-        if name.name not in files_to_scan:
-            continue
+
+        if not scan_all:
+            if name.name not in files_to_scan: continue
 
         capture = cv.VideoCapture(name.path)
         total_frame_count = int(capture.get(cv.CAP_PROP_FRAME_COUNT))

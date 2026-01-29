@@ -39,10 +39,10 @@ def render_start(
         )
 
         # YOLO Detection
-        if settings.RenderMode is RENDERMODE.WITHOUT_HSV:
+        if RENDERMODE == settings.RenderMode.WITHOUT_HSV:
             results = model.predict(source=resized_image, verbose=False, conf=0.1)
             r.render_without_hsv(resized_image, results)
-        elif settings.RenderMode is RENDERMODE.WITH_HSV:
+        elif RENDERMODE == settings.RenderMode.WITH_HSV:
             results = model.predict(
                 source=resized_image, verbose=False, classes=[9], conf=0.25
             )

@@ -129,19 +129,27 @@ class MainWindow(QMainWindow):
 
         self.open_video_folder_button.setFixedSize(150, 50)
         self.open_video_folder_button.clicked.connect(open_video_folder)
-        self.open_video_folder_button.setStyleSheet("background-color: #cccccc; color: black;")
+        self.open_video_folder_button.setStyleSheet(
+            "background-color: #cccccc; color: black;"
+        )
 
         self.open_output_folder_button.setFixedSize(150, 50)
         self.open_output_folder_button.clicked.connect(open_output_folder)
-        self.open_output_folder_button.setStyleSheet("background-color: #cccccc; color: black;")
+        self.open_output_folder_button.setStyleSheet(
+            "background-color: #cccccc; color: black;"
+        )
 
         # Layout
         main_hbox = QHBoxLayout()
 
         # Folder buttons
         folder_buttons_hbox = QHBoxLayout()
-        folder_buttons_hbox.addWidget(self.open_video_folder_button, alignment=Qt.AlignmentFlag.AlignCenter)
-        folder_buttons_hbox.addWidget(self.open_output_folder_button, alignment=Qt.AlignmentFlag.AlignCenter)
+        folder_buttons_hbox.addWidget(
+            self.open_video_folder_button, alignment=Qt.AlignmentFlag.AlignCenter
+        )
+        folder_buttons_hbox.addWidget(
+            self.open_output_folder_button, alignment=Qt.AlignmentFlag.AlignCenter
+        )
 
         # Layout for labels and descriptions
         labels_vbox = QVBoxLayout()
@@ -177,7 +185,12 @@ class MainWindow(QMainWindow):
     def on_task_finished(self) -> None:
         """Called when a task is finished."""
         self.set_buttons_enabled(True)
-        QMessageBox.information(self, "Success", "Operation was successful!\nCheck logs for more info.", QMessageBox.Ok)
+        QMessageBox.information(
+            self,
+            "Success",
+            "Operation was successful!\nCheck logs for more info.",
+            QMessageBox.Ok,
+        )
 
     def on_task_error(self, error_msg) -> None:
         """Called when a task fails."""

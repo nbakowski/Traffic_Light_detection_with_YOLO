@@ -13,7 +13,7 @@ class RenderMode(Enum):
 MODEL = YOLO("models/COCO128_YOLO26_COLLAB.pt")
 RENDERMODE = RenderMode.WITH_HSV
 SCALED_IMAGE_WIDTH, SCALED_IMAGE_HEIGHT = 1270, 720
-if os.name == "nt":
+if os.name == "nt" or os.name == "posix":
     CODEC = cv2.VideoWriter.fourcc(*"mp4v")
 else:
     CODEC = cv2.VideoWriter.fourcc(*"avc1")
