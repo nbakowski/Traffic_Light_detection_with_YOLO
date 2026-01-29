@@ -1,11 +1,20 @@
 import logging
 import os
+import platform
+import subprocess
 
 import cv2 as cv
 
 import settings
 from renderer import render_start
 
+def open_folder(path: str) -> None:
+    if platform.system() == "Windows":
+        os.startfile(path)
+    elif platform.system() == "Darwin":  # macOS
+        subprocess.Popen(["open", path])
+    else:  # Linux
+        subprocess.Popen(["xdg-open", path])
 
 def scan_for_existing_files() -> list[str]:
     """
