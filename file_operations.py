@@ -18,7 +18,6 @@ def scan_for_existing_files() -> list[str]:
         else:
             new_files.append(name.name)
     logging.info(f"Found {len(new_files)} new file(s)!")
-    input("Press the Enter key to continue...")
     return new_files
 
 
@@ -32,7 +31,6 @@ def manage_directories() -> None:
         if not os.path.isdir(directory):
             os.makedirs(directory)
             logging.info(f"Created the {directory} directory.")
-            input("Press the Enter key to continue...")
 
 
 def prep_files(scan_all: bool) -> None:
@@ -41,13 +39,15 @@ def prep_files(scan_all: bool) -> None:
     If scan_all is True, all files are processed.
     If scan_all is False, only new files are processed.
     """
+    manage_directories()
 
+    files_to_scan = []
+    if not scan_all:
+        files_to_scan = scan_for_existing_files()
 
     for name in os.scandir("video"):
-        if not scan_all:
-            files_to_scan = scan_for_existing_files()
-            if name.name not in files_to_scan:
-                continue
+        if name.name not in files_to_scan:
+            continue
 
         capture = cv.VideoCapture(name.path)
         total_frame_count = int(capture.get(cv.CAP_PROP_FRAME_COUNT))
