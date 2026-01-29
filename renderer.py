@@ -39,15 +39,14 @@ def render_start(
         )
 
         # YOLO Detection
-        match settings.RenderMode:
-            case RENDERMODE.WITHOUT_HSV:
-                results = model.predict(source=resized_image, verbose=False, conf=0.1)
-                r.render_without_hsv(resized_image, results)
-            case RENDERMODE.WITH_HSV:
-                results = model.predict(
-                    source=resized_image, verbose=False, classes=[9], conf=0.25
-                )
-                r.render_with_hsv(resized_image, results)
+        if settings.RenderMode is RENDERMODE.WITHOUT_HSV:
+            results = model.predict(source=resized_image, verbose=False, conf=0.1)
+            r.render_without_hsv(resized_image, results)
+        else:
+            results = model.predict(
+                source=resized_image, verbose=False, classes=[9], conf=0.25
+            )
+            r.render_with_hsv(resized_image, results)
 
         if progress and task is not None:
             progress.update(task, advance=1)

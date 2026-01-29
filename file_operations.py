@@ -41,6 +41,8 @@ def prep_files(scan_all: bool) -> None:
     If scan_all is True, all files are processed.
     If scan_all is False, only new files are processed.
     """
+
+
     for name in os.scandir("video"):
         if not scan_all:
             files_to_scan = scan_for_existing_files()
